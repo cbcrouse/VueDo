@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto" max-width="400" tile>
       <v-list-item
-        v-for="todo in todos"
+        v-for="todo in getTodos()"
         :key="todo.id"
       >
         <v-list-item-content>
@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Vue, Component } from "vue-property-decorator";
+import { Log } from "@/decorators/log"
 
 @Component
 export default class Todos extends Vue {
@@ -46,6 +46,11 @@ export default class Todos extends Vue {
         completed: false
     }
   ];
+
+  @Log
+  getTodos() {
+    return this.todos;
+  }
 }
 </script>
 
