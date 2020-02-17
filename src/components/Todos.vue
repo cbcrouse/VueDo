@@ -3,9 +3,7 @@
     <v-list-item v-for="todo in todos" :key="todo.id">
       <v-list-item-content>
         <v-list-item-title>{{ todo.title }}</v-list-item-title>
-        <v-list-item-subtitle
-          >{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle
-        >
+        <v-list-item-subtitle>{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
   </v-card>
