@@ -1,20 +1,24 @@
 <template>
-  <v-container fill-height align-center>
+  <v-container>
+    <v-container>
+      <v-form @submit="onSubmit">
+        <v-text-field placeholder="New Todo" required v-model="title" />
+        <v-btn block color="primary" dark type="submit" on>ADD TODO</v-btn>
+      </v-form>
+    </v-container>
     <v-list subheader two-line flat>
       <v-list-item-group multiple v-for="todo in todos" :key="todo.id">
         <v-list-item>
-          <template v-slot:default="{ active, toggle }">
+          <template>
             <v-list-item-action>
-              <v-checkbox
-                v-model=todo.completed
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
+              <v-checkbox v-model="todo.completed" color="primary"></v-checkbox>
             </v-list-item-action>
 
             <v-list-item-content>
               <v-list-item-title>{{ todo.title }}</v-list-item-title>
-              <v-list-item-subtitle>{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                >{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle
+              >
             </v-list-item-content>
           </template>
         </v-list-item>
@@ -42,7 +46,16 @@ export class TodoModel {
 @Component
 export default class Todos extends Vue {
   // Data property
+  title: string = "";
   todos: TodoModel[] = [];
+
+  onSubmit(e: Event) {
+    e.preventDefault();
+    var id = this.todos.length + 1;
+    var todo = new TodoModel(id.toString(), this.title, false);
+    this.todos.push(todo);
+    this.title = "";
+  }
 
   // Initializing todo list using Lifecycle hooks.
   @Log

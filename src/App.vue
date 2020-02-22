@@ -6,8 +6,9 @@
       </div>
       <v-spacer></v-spacer>
     </v-app-bar>
-
-  <Todos />
+    <br />
+    <br />
+    <Todos />
   </v-app>
 </template>
 
