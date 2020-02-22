@@ -20,6 +20,9 @@
                 >{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle
               >
             </v-list-item-content>
+              <v-btn @click="onDelete($event, todo.id)" color="primary" fab small dark>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
           </template>
         </v-list-item>
       </v-list-item-group>
@@ -29,44 +32,28 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { Log } from "@/decorators/log";
-
-export class TodoModel {
-  id: String | undefined;
-  title: String | undefined;
-  completed: Boolean | undefined;
-
-  constructor(id: string, title: string, completed: boolean) {
-    this.id = id;
-    this.title = title;
-    this.completed = completed;
-  }
-}
+import { TodoModel } from "./TodoModel";
 
 @Component
 export default class Todos extends Vue {
-  // Data property
+
   title: string = "";
-  todos: TodoModel[] = [];
+
+  get todos() {
+    return this.$store.getters.todos;
+  }
 
   onSubmit(e: Event) {
     e.preventDefault();
     var id = this.todos.length + 1;
     var todo = new TodoModel(id.toString(), this.title, false);
-    this.todos.push(todo);
+    this.$store.dispatch("addTodo", todo);
     this.title = "";
   }
 
-  // Initializing todo list using Lifecycle hooks.
-  @Log
-  created() {
-    this.todos = [
-      new TodoModel("1", "todo 1", false),
-      new TodoModel("2", "todo 2", false),
-      new TodoModel("3", "todo 3", false),
-      new TodoModel("4", "todo 4", false),
-      new TodoModel("5", "todo 5", false)
-    ];
+  onDelete(e: Event, id: string) {
+    e.preventDefault();
+    this.$store.dispatch("deleteTodo", id);
   }
 }
 </script>

@@ -3,6 +3,7 @@
         "Interop",
         "Vuex",
         "esnext",
+        "todos",
         "vuetify"
     ]
 }
