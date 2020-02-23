@@ -38,13 +38,11 @@ const actions = {
     commit('deleteTodo', id);
   },
 
-  async fetchTodos({ commit }) {
-    const response = await axios.get(
-      'https://jsonplaceholder.typicode.com/todos'
-    );
+  async fetchTodos({ commit }, limit: Number = 200) {
+    const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
 
-    const todos = response.data;
-    todos.forEach(todo => {
+    const todos = new Array<TodoModel>();
+    response.data.forEach(todo => {
       todos.push(new TodoModel(todo.id.toString(), todo.title, todo.completed))
     });
 

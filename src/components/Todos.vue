@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-container>
+  <v-container fluid>
+    <v-container fluid>
       <v-form @submit="onSubmit">
         <v-text-field
           placeholder="New Todo"
@@ -9,9 +9,29 @@
         />
         <v-btn block color="primary" dark type="submit" on>ADD TODO</v-btn>
       </v-form>
+
+      <v-row>
+        <v-col>
+          <v-select
+            @change="onFilterChange"
+            :items="filterCounts"
+            label="Filter Count"
+            v-model="filterCount"
+            dense
+            outlined
+          ></v-select>
+        </v-col>
+        <v-col></v-col>
+        <v-col></v-col>
+        <v-col></v-col>
+      </v-row>
     </v-container>
     <v-list subheader two-line flat>
-      <v-list-item-group multiple v-for="todo in todos" :key="todo.id">
+      <v-list-item-group
+        multiple
+        v-for="todo in this.$store.getters.todos"
+        :key="todo.id"
+      >
         <v-list-item>
           <template>
             <v-list-item-action>
@@ -47,14 +67,16 @@ import { TodoModel } from "./TodoModel";
 @Component
 export default class Todos extends Vue {
   title: string = "";
+  filterCounts: Number[] = [5, 10, 20, 50, 100];
+  filterCount: Number | null = 200;
 
-  get todos() {
-    return this.$store.getters.todos;
+  onFilterChange() {
+    this.$store.dispatch("fetchTodos", this.filterCount);
   }
 
   onSubmit(e: Event) {
     e.preventDefault();
-    var id = this.todos.length + 1;
+    var id = this.$store.getters.todos.length + 1;
     var todo = new TodoModel(id.toString(), this.title, false);
     this.$store.dispatch("addTodo", todo);
     this.title = "";
@@ -66,7 +88,7 @@ export default class Todos extends Vue {
   }
 
   created() {
-    this.$store.dispatch('fetchTodos');
+    this.$store.dispatch("fetchTodos", this.filterCount);
   }
 }
 </script>
