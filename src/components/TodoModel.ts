@@ -1,7 +1,7 @@
 export class TodoModel {
-    id: String | undefined;
-    title: String | undefined;
-    completed: Boolean | undefined;
+    id: String | null;
+    title: String | null;
+    completed: Boolean | null;
   
     constructor(id: string, title: string, completed: boolean) {
       this.id = id;

@@ -2,7 +2,11 @@
   <v-container>
     <v-container>
       <v-form @submit="onSubmit">
-        <v-text-field placeholder="New Todo" required v-model="title" />
+        <v-text-field
+          placeholder="New Todo"
+          :rules="['Required']"
+          v-model="title"
+        />
         <v-btn block color="primary" dark type="submit" on>ADD TODO</v-btn>
       </v-form>
     </v-container>
@@ -20,9 +24,15 @@
                 >{{ todo.id }}: {{ todo.completed }}</v-list-item-subtitle
               >
             </v-list-item-content>
-              <v-btn @click="onDelete($event, todo.id)" color="primary" fab small dark>
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
+            <v-btn
+              @click="onDelete($event, todo.id)"
+              color="primary"
+              fab
+              small
+              dark
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </template>
         </v-list-item>
       </v-list-item-group>
@@ -36,7 +46,6 @@ import { TodoModel } from "./TodoModel";
 
 @Component
 export default class Todos extends Vue {
-
   title: string = "";
 
   get todos() {
@@ -54,6 +63,10 @@ export default class Todos extends Vue {
   onDelete(e: Event, id: string) {
     e.preventDefault();
     this.$store.dispatch("deleteTodo", id);
+  }
+
+  created() {
+    this.$store.dispatch('fetchTodos');
   }
 }
 </script>
