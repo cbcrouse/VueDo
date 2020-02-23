@@ -8,7 +8,14 @@
     </v-app-bar>
     <br />
     <br />
-    <Todos />
+    <v-row>
+      <v-col>
+        <Todos />
+      </v-col>
+      <v-col>
+        <Todos />
+      </v-col>
+    </v-row>
   </v-app>
 </template>
 
