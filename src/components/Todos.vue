@@ -21,8 +21,14 @@
             outlined
           ></v-select>
         </v-col>
-        <v-col></v-col>
-        <v-col></v-col>
+        <v-col>
+          <span class="mr-2">Todos Completed: {{ totalCompleted }} </span>
+          <v-progress-circular
+            :value="percentageCompleted"
+          ></v-progress-circular>
+        </v-col>
+        <v-col>
+        </v-col>
         <v-col></v-col>
       </v-row>
     </v-container>
@@ -69,6 +75,19 @@ export default class Todos extends Vue {
   title: string = "";
   filterCounts: Number[] = [5, 10, 20, 50, 100];
   filterCount: Number | null = 200;
+
+  get totalCompleted() {
+    const todos = (this.$store.getters.todos as TodoModel[]).filter(todo => {
+      return todo.completed;
+    });
+    return todos.length;
+  }
+
+  get percentageCompleted() {
+    const total = (this.$store.getters.todos as TodoModel[]).length;
+    const percentage = this.totalCompleted / total;
+    return percentage * 100;
+  }
 
   onFilterChange() {
     this.$store.dispatch("fetchTodos", this.filterCount);
