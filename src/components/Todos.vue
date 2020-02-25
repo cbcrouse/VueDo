@@ -35,7 +35,7 @@
     <v-list subheader two-line flat>
       <v-list-item-group
         multiple
-        v-for="todo in this.$store.getters.todos"
+        v-for="todo in this.$store.getters['Todo/todos']"
         :key="todo.id"
       >
         <v-list-item>
@@ -77,37 +77,37 @@ export default class Todos extends Vue {
   filterCount: Number | null = 200;
 
   get totalCompleted() {
-    const todos = (this.$store.getters.todos as TodoModel[]).filter(todo => {
+    const todos = (this.$store.getters['Todo/todos'] as TodoModel[]).filter(todo => {
       return todo.completed;
     });
     return todos.length;
   }
 
   get percentageCompleted() {
-    const total = (this.$store.getters.todos as TodoModel[]).length;
+    const total = (this.$store.getters['Todo/todos'] as TodoModel[]).length;
     const percentage = this.totalCompleted / total;
     return percentage * 100;
   }
 
   onFilterChange() {
-    this.$store.dispatch("fetchTodos", this.filterCount);
+    this.$store.dispatch("Todo/fetchTodos", this.filterCount);
   }
 
   onSubmit(e: Event) {
     e.preventDefault();
-    var id = this.$store.getters.todos.length + 1;
+    var id = this.$store.getters['Todo/todos'].length + 1;
     var todo = new TodoModel(id.toString(), this.title, false);
-    this.$store.dispatch("addTodo", todo);
+    this.$store.dispatch("Todo/addTodo", todo);
     this.title = "";
   }
 
   onDelete(e: Event, id: string) {
     e.preventDefault();
-    this.$store.dispatch("deleteTodo", id);
+    this.$store.dispatch("Todo/deleteTodo", id);
   }
 
   created() {
-    this.$store.dispatch("fetchTodos", this.filterCount);
+    this.$store.dispatch("Todo/fetchTodos", this.filterCount);
   }
 }
 </script>

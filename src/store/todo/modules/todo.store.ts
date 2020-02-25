@@ -2,9 +2,9 @@
 import { TodoModel } from "@/components/TodoModel"
 import axios from "axios"
 
-const state = {
+const state = () => ({
   todos: new Array<TodoModel>()
-}
+});
 
 const getters = {
   todos(state) {
@@ -51,7 +51,7 @@ const actions = {
 }
 
 export default {
-  // namespaced: true,
+  namespaced: true,
   state,
   getters,
   actions,
