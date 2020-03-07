@@ -1,4 +1,7 @@
 # VueTodo
+
+![CI](https://github.com/cbcrouse/VueDo/workflows/CI/badge.svg)
+
 A beginner project to learn Vue, Vuex, and front-end architecture.
 
 ---
